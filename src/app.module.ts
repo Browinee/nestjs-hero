@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { z } from 'zod';
-
+import * as Joi from 'joi';
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
 
 @Module({
@@ -12,11 +11,11 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
       isGlobal: true,
       envFilePath: [envFilePath],
       load: [],
-      validationSchema: {
-        DB: z.string(),
-        PORT: z.number().default(3005),
-        DB_HOST: z.string().url(),
-      },
+      validationSchema: Joi.object({
+        DB: Joi.string(),
+        PORT: Joi.number().default(3005),
+        DB_HOST: Joi.string().ip(),
+      }),
     }),
   ],
   controllers: [AppController],
