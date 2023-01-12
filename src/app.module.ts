@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './database/database.module';
+
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
 
 @Module({
@@ -12,11 +15,15 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
       envFilePath: [envFilePath],
       load: [],
       validationSchema: Joi.object({
-        DB: Joi.string(),
-        PORT: Joi.number().default(3005),
+        DB: Joi.string().ip(),
         DB_HOST: Joi.string().ip(),
+        DB_PORT: Joi.number().default(3306),
+        DB_USER: Joi.string(),
+        DB_PASSWORD: Joi.string(),
+        DB_NAME: Joi.string(),
       }),
     }),
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
