@@ -19,6 +19,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         //  option and don't use this in production -
         // otherwise you can lose production data.
         synchronize: true,
+        logging: false,
       }),
     }),
   ],
