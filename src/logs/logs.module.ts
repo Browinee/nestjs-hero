@@ -5,7 +5,6 @@ import { Log } from 'src/enum/config.enum';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
 
-console.log();
 function createDailyRotateTransports(level: string, filename: string) {
   return new winston.transports.DailyRotateFile({
     level,

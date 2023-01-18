@@ -6,6 +6,7 @@ import * as Joi from 'joi';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { LogsModule } from './logs/logs.module';
+import { PostModule } from './post/post.module';
 
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
 
@@ -14,7 +15,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [envFilePath],
+      envFilePath: ['.env', envFilePath],
       load: [],
       validationSchema: Joi.object({
         DB: Joi.string().ip(),
@@ -30,6 +31,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
     DatabaseModule,
     UserModule,
     LogsModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
