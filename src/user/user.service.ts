@@ -25,8 +25,6 @@ export class UserService {
     return this.userRepository.delete(id);
   }
   findProfile(id: string): any {
-    console.log('id', id);
-
     return this.userRepository.findOne({
       where: { id },
       relations: { profile: true },
