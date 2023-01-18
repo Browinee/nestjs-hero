@@ -1,24 +1,12 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import * as winston from 'winston';
-import { WinstonModule, utilities } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 async function bootstrap() {
-  const instance = winston.createLogger({
-    transports: [
-      new winston.transports.Console({
-        format: winston.format.combine(
-          winston.format.timestamp(),
-          utilities.format.nestLike(),
-        ),
-      }),
-    ],
-  });
-  const app = await NestFactory.create(AppModule, {
-    logger: WinstonModule.createLogger({ instance }),
-  });
+  const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService); // 取得 ConfigService
   const PORT = configService.get('PORT');
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.setGlobalPrefix('api/v1');
 
   await app.listen(PORT);

@@ -1,14 +1,16 @@
+import { Controller, Get, Inject, LoggerService, Post } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UserService } from './user.service';
-import { Controller, Get, Inject, Logger, Post } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { User } from './entity/user.entity';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(
     private userService: UserService,
     private configService: ConfigService,
-    private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
   ) {}
 
   @Get()

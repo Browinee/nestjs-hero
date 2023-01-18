@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { LogsModule } from './logs/logs.module';
 
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
 
@@ -22,10 +23,13 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
         DB_USER: Joi.string(),
         DB_PASSWORD: Joi.string(),
         DB_NAME: Joi.string(),
+        LOG_LEVEL: Joi.string(),
+        LOG_ON: Joi.bool(),
       }),
     }),
     DatabaseModule,
     UserModule,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
