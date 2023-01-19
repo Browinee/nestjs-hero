@@ -1,7 +1,7 @@
 # compiled output
 nest-be/dist
 nest-be/node_modules/**/**.js
-
+node_modules
 # Logs
 /logs
 *.log
