@@ -4,7 +4,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(
     private userService: UserService,
@@ -16,6 +16,10 @@ export class UserController {
   @Get()
   getUsers(): Promise<User[]> {
     return this.userService.findAll();
+  }
+  @Get('/:id')
+  getUser() {
+    return 'hello';
   }
   @Post()
   addUser(user: User) {
