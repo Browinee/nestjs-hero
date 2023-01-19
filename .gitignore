@@ -1,6 +1,6 @@
 # compiled output
-/dist
-/node_modules
+nest-be/dist
+nest-be/node_modules/**/**.js
 
 # Logs
 /logs
@@ -15,7 +15,7 @@ lerna-debug.log*
 .DS_Store
 
 # Tests
-/coverage
+/nest-be/coverage
 /.nyc_output
 
 # IDEs and editors
@@ -33,6 +33,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.env.development
-.env.production
-.env
+/**/.env.development
+/**/.env.production
+/**/.env
