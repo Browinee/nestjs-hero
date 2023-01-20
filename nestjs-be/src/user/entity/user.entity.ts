@@ -14,8 +14,8 @@ import { Profile } from './profile.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
   @Column()
   username: string;
   @Column()

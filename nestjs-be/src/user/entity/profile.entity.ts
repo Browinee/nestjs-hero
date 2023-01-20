@@ -9,11 +9,11 @@ import { User } from './user.entity';
 
 @Entity()
 export class Profile {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
-  gender: string;
+  gender: number;
 
   @Column()
   address: string;
@@ -25,3 +25,11 @@ export class Profile {
   @JoinColumn()
   user: User;
 }
+
+// example
+// {
+//   id: 1;
+//   gender: 1;
+//   photo: 'Test';
+//   address: 'Test';
+// }
