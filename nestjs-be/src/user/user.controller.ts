@@ -9,14 +9,17 @@ import {
   Param,
   Delete,
   Query,
+  UseFilters,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { TypormFilter } from 'src/filters/typeorm.filter';
 import { GetUserDto } from './dto/get-user.dto';
 import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 
 @Controller('users')
+@UseFilters(new TypormFilter())
 export class UserController {
   constructor(
     private userService: UserService,
@@ -28,7 +31,6 @@ export class UserController {
   @Get()
   getUsers(@Query() query: GetUserDto): Promise<User[]> {
     // page, limit, condition(username, role, gender), sort
-    console.log('query', { query });
     return this.userService.findAll(query);
   }
 

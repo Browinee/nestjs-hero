@@ -16,7 +16,7 @@ import { Profile } from './profile.entity';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ unique: true })
   username: string;
   @Column()
   password: string;
