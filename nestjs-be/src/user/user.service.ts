@@ -2,13 +2,17 @@ import { genQuery } from './../utils/query';
 import { GetUserDto } from './dto/get-user.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { User } from './entity/user.entity';
-
+import { Roles } from '../roles/entity/roles.entity';
+import { Logs } from '../logs/entity/logs.entity';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Logs) private readonly logsRepository: Repository<Logs>,
+    @InjectRepository(Roles)
+    private readonly rolesRepository: Repository<Roles>,
   ) {}
   async findAll(query: GetUserDto) {
     const { limit = 10, page = 1, username, gender, role } = query;
@@ -22,7 +26,7 @@ export class UserService {
     //     profile: {
     //       gender,
     //     },
-    //     roles: {
+    //      roles: {
     //       id: role,
     //     },
     //   },
@@ -57,13 +61,27 @@ export class UserService {
     return this.userRepository.findOne({ where: { id } });
   }
   async create(user: User) {
+    if (user.roles instanceof Array && typeof user.roles[0] === 'number') {
+      user.roles = await this.rolesRepository.find({
+        where: {
+          id: In(user.roles),
+        },
+      });
+    }
     const newUser = await this.userRepository.create(user);
+    const res = this.userRepository.save(newUser);
+    return res;
+  }
+  async update(id: number, user: Partial<User>) {
+    // NOTE: for relations
+    const userTemp = await this.findProfile(id);
+    const newUser = this.userRepository.merge(userTemp, user);
     return this.userRepository.save(newUser);
+
+    // NOTE single entity
+    // return this.userRepository.update(id, user)
   }
-  update(id: number, user: Partial<User>) {
-    return this.userRepository.update(id, user);
-  }
-  remove(id: string) {
+  remove(id: number) {
     return this.userRepository.delete(id);
   }
   findProfile(id: number): any {
