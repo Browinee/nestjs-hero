@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { LogsModule } from './logs/logs.module';
 import { PostModule } from './post/post.module';
+import { AuthModule } from './auth/auth.module';
 
 const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
 
@@ -32,6 +33,7 @@ const envFilePath = `.env.${process.env.NODE_ENV || 'development'}`;
     UserModule,
     LogsModule,
     PostModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],

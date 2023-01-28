@@ -1,5 +1,5 @@
 export interface GetUserDto {
-  page: number;
+  page?: number;
   limit?: number;
   username?: string;
   role?: number;
