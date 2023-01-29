@@ -13,8 +13,10 @@ import {
   Headers,
   UnauthorizedException,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AuthGuard } from '@nestjs/passport';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { TypormFilter } from 'src/filters/typeorm.filter';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -65,6 +67,7 @@ export class UserController {
   }
 
   @Get('/profile')
+  @UseGuards(AuthGuard('jwt'))
   getUserProfile(@Query('id', ParseIntPipe) id: any) {
     console.log('id', { id: typeof id });
     return this.userService.findProfile(id);

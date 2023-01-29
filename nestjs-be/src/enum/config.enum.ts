@@ -1,6 +1,8 @@
 export const enum Config {
   DB = 'DB',
   DB_HOST = 'DB_HOST',
+  JWT_ACCESS_TOKEN_SECRET = 'JWT_ACCESS_TOKEN_SECRET',
+  JWT_ACCESS_TOKEN_EXPIRATION_TIME = 'JWT_ACCESS_TOKEN_EXPIRATION_TIME',
 }
 
 export const enum Log {

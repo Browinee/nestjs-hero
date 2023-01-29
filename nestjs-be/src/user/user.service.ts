@@ -57,8 +57,8 @@ export class UserService {
       .skip((page - 1) * limit)
       .getMany();
   }
-  async find(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+  async find(username: string) {
+    return this.userRepository.findOne({ where: { username } });
   }
   async create(user: any) {
     if (!user.roles) {

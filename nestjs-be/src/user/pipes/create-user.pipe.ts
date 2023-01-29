@@ -9,7 +9,6 @@ export class CreateUserPipe implements PipeTransform {
       if ((value.roles[0] as Roles).id) {
         // Roles[]
         value.roles = value.roles.map((role) => role.id);
-      } else {
       }
     }
     return value;
