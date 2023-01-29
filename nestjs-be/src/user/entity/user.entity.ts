@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Logs } from 'src/logs/entity/logs.entity';
 import { Roles } from 'src/roles/entity/roles.entity';
 import {
@@ -18,7 +19,9 @@ export class User {
   id: number;
   @Column({ unique: true })
   username: string;
+
   @Column()
+  @Exclude()
   password: string;
 
   @OneToMany(() => Logs, (logs) => logs.user, { cascade: true })
