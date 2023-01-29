@@ -49,7 +49,7 @@ export class UserController {
   @Post()
   addUser(@Body(CreateUserPipe) user: CreateUserDto) {
     console.log('user', { user });
-    return this.userService.create(user);
+    return this.userService.create(user as Partial<User>);
   }
 
   @Patch('/:id')
