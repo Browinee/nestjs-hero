@@ -21,6 +21,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { TypormFilter } from 'src/filters/typeorm.filter';
 import { AdminGuard } from 'src/guards/admin.guard';
+import JwtAuthenticationGuard from 'src/guards/jwt.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { User } from './entity/user.entity';
@@ -29,6 +30,7 @@ import { UserService } from './user.service';
 
 @Controller('users')
 @UseFilters(new TypormFilter())
+@UseGuards(JwtAuthenticationGuard)
 export class UserController {
   constructor(
     private userService: UserService,
@@ -38,7 +40,7 @@ export class UserController {
   ) {}
 
   @Get()
-  @UseGuards(AuthGuard('jwt'), AdminGuard)
+  @UseGuards(AdminGuard)
   getUsers(@Query() query: GetUserDto): Promise<User[]> {
     // page, limit, condition(username, role, gender), sort
     return this.userService.findAll(query);
@@ -70,7 +72,6 @@ export class UserController {
   }
 
   @Get('/profile')
-  @UseGuards(AuthGuard('jwt'))
   getUserProfile(@Query('id', ParseIntPipe) id: any) {
     return this.userService.findProfile(id);
   }
