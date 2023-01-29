@@ -60,7 +60,7 @@ export class UserService {
   async find(id: number) {
     return this.userRepository.findOne({ where: { id } });
   }
-  async create(user: Partial<User>) {
+  async create(user: any) {
     if (!user.roles) {
       const role = await this.rolesRepository.findOne({ where: { id: 3 } });
       user.roles = [role];

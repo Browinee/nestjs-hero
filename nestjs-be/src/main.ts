@@ -1,9 +1,10 @@
-// import { AllExceptionFilter } from './filters/all-exception.filter.ts';
+import { AllExceptionFilter } from './filters/all-exception.filter.ts';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService); // 取得 ConfigService
@@ -14,6 +15,11 @@ async function bootstrap() {
   const httpAdapter = app.get(HttpAdapterHost);
   const logger = new Logger();
   // app.useGlobalFilters(new AllExceptionFilter(logger, httpAdapter));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
   await app.listen(PORT);
 }
 bootstrap();

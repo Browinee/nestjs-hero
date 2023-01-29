@@ -12,12 +12,15 @@ import {
   UseFilters,
   Headers,
   UnauthorizedException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { TypormFilter } from 'src/filters/typeorm.filter';
+import { CreateUserDto } from './dto/create-user.dto';
 import { GetUserDto } from './dto/get-user.dto';
 import { User } from './entity/user.entity';
+import { CreateUserPipe } from './pipes/create-user.pipe';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -37,7 +40,7 @@ export class UserController {
   }
 
   @Post()
-  addUser(@Body() user: User) {
+  addUser(@Body(CreateUserPipe) user: CreateUserDto) {
     console.log('user', { user });
     return this.userService.create(user);
   }
@@ -62,8 +65,9 @@ export class UserController {
   }
 
   @Get('/profile')
-  getUserProfile() {
-    return this.userService.findProfile(1);
+  getUserProfile(@Query('id', ParseIntPipe) id: any) {
+    console.log('id', { id: typeof id });
+    return this.userService.findProfile(id);
   }
   @Get('/logsByGroup')
   getLogsByGroup() {
