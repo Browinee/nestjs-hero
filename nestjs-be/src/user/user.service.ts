@@ -58,7 +58,10 @@ export class UserService {
       .getMany();
   }
   async find(username: string) {
-    return this.userRepository.findOne({ where: { username } });
+    return this.userRepository.findOne({
+      where: { username },
+      relations: ['roles'],
+    });
   }
   async create(user: any) {
     if (!user.roles) {

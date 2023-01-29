@@ -1,7 +1,7 @@
 import { WinstonModule, utilities } from 'nest-winston';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Log } from 'src/enum/config.enum';
+import { Log } from 'src/enum/config';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
 
