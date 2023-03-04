@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { User } from './entity/user.entity';
-import { Roles } from '../roles/entity/roles.entity';
+import { Roles } from '../roles/roles.entity';
 import { Logs } from '../logs/entity/logs.entity';
 import * as argon2 from 'argon2';
 @Injectable()

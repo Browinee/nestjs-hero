@@ -1,5 +1,5 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { Roles } from 'src/roles/entity/roles.entity';
+import { Roles } from 'src/roles/roles.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
